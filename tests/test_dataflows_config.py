@@ -95,7 +95,9 @@ def test_a_run_reads_its_own_graphs_vendors_not_the_last_graph_built():
     set_config(first)                                   # graph A is built
     second = _graph(copy.deepcopy(default_config.DEFAULT_CONFIG))
 
-    assert _vendors_seen_by_a_run(second) == ["yfinance"]
+    # 默认 tool_vendors 现在有 get_balance_sheet → sec_edgar（6.5E），
+    # second graph 应读到默认值 sec_edgar，而不是 first 的 "sec_edgar,yfinance"
+    assert _vendors_seen_by_a_run(second) == ["sec_edgar"]
 
 
 @pytest.mark.unit

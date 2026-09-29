@@ -2,6 +2,7 @@ from tradingagents.agents.context import (
     get_instrument_context_from_state,
     get_language_instruction,
     opponent_argument_or_opening,
+    render_quant_context_section,
     report_or_absent,
 )
 
@@ -20,6 +21,7 @@ def create_bull_researcher(llm):
         news_report = report_or_absent(state["news_report"], "news")
         fundamentals_report = report_or_absent(state["fundamentals_report"], "fundamentals")
         instrument_context = get_instrument_context_from_state(state)
+        quant_context_section = render_quant_context_section(state)
         asset_type = state.get("asset_type", "stock")
         target_label = "stock" if asset_type == "stock" else "asset"
         fundamentals_label = (
@@ -45,6 +47,10 @@ Latest world affairs news: {news_report}
 {fundamentals_label}: {fundamentals_report}
 Conversation history of the debate: {history}
 Last bear argument: {current_response}
+
+{quant_context_section}
+
+When using the Quant Engine context: explicitly seek evidence that supports the bull thesis, and ALSO flag factors in the Quant Engine context that conflict with the bull case (e.g. a high DOWN probability or bearish regime signal). Do not simply copy the Quant Engine context as your own argument.
 Use this information to deliver a compelling bull argument, refute the bear's concerns, and engage in a dynamic debate that demonstrates the strengths of the bull position.
 """ + get_language_instruction()
 

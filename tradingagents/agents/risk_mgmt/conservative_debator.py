@@ -3,6 +3,7 @@ from tradingagents.agents.context import (
     get_language_instruction,
     get_portfolio_context_from_state,
     opponent_argument_or_opening,
+    render_quant_context_section,
     report_or_absent,
 )
 
@@ -26,6 +27,7 @@ def create_conservative_debator(llm):
         fundamentals_report = report_or_absent(state["fundamentals_report"], "fundamentals")
         instrument_context = get_instrument_context_from_state(state)
         portfolio_context = get_portfolio_context_from_state(state)
+        quant_context_section = render_quant_context_section(state)
 
         trader_decision = state["trader_investment_plan"]
 
@@ -37,6 +39,10 @@ Your task is to actively counter the arguments of the Aggressive and Neutral Ana
 
 {instrument_context}
 {portfolio_context}
+
+{quant_context_section}
+
+Read the Quant Engine context for regime and probability distribution. Do NOT recalculate probability, regime score, or any risk metric yourself.
 Market Research Report: {market_research_report}
 Social Media Sentiment Report: {sentiment_report}
 Latest World Affairs Report: {news_report}

@@ -1,0 +1,209 @@
+{
+  "dataset_version": "golden_v1",
+  "schema_version": "1.0",
+  "immutable": true,
+  "generated_at": "2026-09-27T21:50:54.573523",
+  "price_basis": "unadjusted",
+  "adjustment": "NONE",
+  "timezone": "America/New_York",
+  "source": "opend",
+  "option_chain": {
+    "realtime_recent": "VERIFIED",
+    "historical_pit_reconstruct": "UNVERIFIED"
+  },
+  "samples": [
+    {
+      "date": "2013-01-02",
+      "daily": {
+        "rows": 5,
+        "status": "OK",
+        "checksum": "1caa130e3fcd1bbcd8eeb3e94b6344d0257f95c49efca48c208138b9d4318c4a",
+        "replay": {
+          "rows": 5,
+          "visible_close": 5,
+          "visible_pre": 0,
+          "pit_ok": true
+        },
+        "validation": {
+          "duplicates": 0,
+          "future_data": 0,
+          "null": 0,
+          "ohlc_violations": 0
+        }
+      },
+      "intraday_15m": {
+        "rows": 0,
+        "status": "UNAVAILABLE"
+      },
+      "validation": null,
+      "replay": null
+    },
+    {
+      "date": "2020-03-16",
+      "daily": {
+        "rows": 5,
+        "status": "OK",
+        "checksum": "864c1e5dc279afa8581addc0924cc5a7df5101c9546635aad3cf4ec8077c9d76",
+        "replay": {
+          "rows": 5,
+          "visible_close": 5,
+          "visible_pre": 0,
+          "pit_ok": true
+        },
+        "validation": {
+          "duplicates": 0,
+          "future_data": 0,
+          "null": 0,
+          "ohlc_violations": 0
+        }
+      },
+      "intraday_15m": {
+        "rows": 130,
+        "status": "OK",
+        "checksum": "41a73d39438943d053b970be3ca994160be9982bd0bf55cde05ec5a160a3da63",
+        "cross_session_bars": 0,
+        "ohlc_violations": 0
+      },
+      "validation": null,
+      "replay": null
+    },
+    {
+      "date": "2024-01-02",
+      "daily": {
+        "rows": 5,
+        "status": "OK",
+        "checksum": "79537a8520878cfe7abe909c025c01c4afdcf019515d3044177335352ffdc220",
+        "replay": {
+          "rows": 5,
+          "visible_close": 5,
+          "visible_pre": 0,
+          "pit_ok": true
+        },
+        "validation": {
+          "duplicates": 0,
+          "future_data": 0,
+          "null": 0,
+          "ohlc_violations": 0
+        }
+      },
+      "intraday_15m": {
+        "rows": 130,
+        "status": "OK",
+        "checksum": "87d82e2e516703bebd6f2861a05f6498b1acaf8e56b180ffafd08e4fb948a178",
+        "cross_session_bars": 0,
+        "ohlc_violations": 0
+      },
+      "validation": null,
+      "replay": null
+    },
+    {
+      "date": "2026-09-23",
+      "daily": {
+        "rows": 5,
+        "status": "OK",
+        "checksum": "49cbb0f02b71b3794fd5508f7d24447c1664a5bdefb0a22f8c33db0691da9d1c",
+        "replay": {
+          "rows": 5,
+          "visible_close": 5,
+          "visible_pre": 0,
+          "pit_ok": true
+        },
+        "validation": {
+          "duplicates": 0,
+          "future_data": 0,
+          "null": 0,
+          "ohlc_violations": 0
+        }
+      },
+      "intraday_15m": {
+        "rows": 130,
+        "status": "OK",
+        "checksum": "a1e848641a55982676eeeac059d2e985a3c034833bf2439bde3242caab1c6c54",
+        "cross_session_bars": 0,
+        "ohlc_violations": 0
+      },
+      "validation": null,
+      "replay": null
+    },
+    {
+      "date": "2026-09-24",
+      "daily": {
+        "rows": 5,
+        "status": "OK",
+        "checksum": "a7bc87d49696f6145bda8deb56d1bec96e977d3c714f4213b3847480710721cb",
+        "replay": {
+          "rows": 5,
+          "visible_close": 5,
+          "visible_pre": 0,
+          "pit_ok": true
+        },
+        "validation": {
+          "duplicates": 0,
+          "future_data": 0,
+          "null": 0,
+          "ohlc_violations": 0
+        }
+      },
+      "intraday_15m": {
+        "rows": 130,
+        "status": "OK",
+        "checksum": "88f65f12b05a77b12117136728318d3a7fab36bdff2c5b2d9327a12572e1fead",
+        "cross_session_bars": 0,
+        "ohlc_violations": 0
+      },
+      "validation": null,
+      "replay": null
+    },
+    {
+      "date": "2026-09-25",
+      "daily": {
+        "rows": 5,
+        "status": "OK",
+        "checksum": "452ddcd92c4338e805b81f1948d0bfd007715c4e5292bf92aff4a79c9c77f1d3",
+        "replay": {
+          "rows": 5,
+          "visible_close": 5,
+          "visible_pre": 0,
+          "pit_ok": true
+        },
+        "validation": {
+          "duplicates": 0,
+          "future_data": 0,
+          "null": 0,
+          "ohlc_violations": 0
+        }
+      },
+      "intraday_15m": {
+        "rows": 130,
+        "status": "OK",
+        "checksum": "9d758deb106dcde2b5342f8b38fbe3b059b6f72ad6b8856b83fd92ac501b9d08",
+        "cross_session_bars": 0,
+        "ohlc_violations": 0
+      },
+      "validation": null,
+      "replay": null
+    }
+  ],
+  "option_chain_sample": {
+    "rows": 350,
+    "columns": [
+      "code",
+      "name",
+      "lot_size",
+      "stock_type",
+      "option_type",
+      "stock_owner",
+      "strike_time",
+      "strike_price",
+      "suspension",
+      "stock_id",
+      "index_option_type",
+      "expiration_cycle",
+      "option_standard_type",
+      "option_settlement_mode"
+    ],
+    "realtime_recent": "VERIFIED",
+    "historical_pit_reconstruct": "UNVERIFIED",
+    "checksum": "d8f43bccb38b31b386decd948185b06429efde18ed446f2a55bb36b6dd13a228"
+  }
+}

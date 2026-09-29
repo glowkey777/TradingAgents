@@ -10,6 +10,7 @@ from tradingagents.agents.context import (
     get_instrument_context_from_state,
     get_language_instruction,
     get_portfolio_context_from_state,
+    render_quant_context_section,
 )
 from tradingagents.agents.schemas import TraderProposal, render_trader_proposal
 from tradingagents.agents.structured import (
@@ -33,6 +34,7 @@ def create_trader(llm):
         # only offer it (and the grounding instruction) when it has content.
         market_report = (state["market_report"] or "").strip()
         portfolio_context = get_portfolio_context_from_state(state)
+        quant_context_section = render_quant_context_section(state)
 
         if market_report:
             grounding = (
@@ -70,6 +72,10 @@ def create_trader(llm):
                     f"{instrument_context}\n\n"
                     f"{report_section}"
                     f"{portfolio_context}\n\n"
+                    f"{quant_context_section}\n\n"
+                    "Your directional interpretation must not create a new probability "
+                    "estimate. Confidence is NOT p_up. If you cite a probability, cite the "
+                    "Quant Engine's existing values only.\n\n"
                     f"Proposed Investment Plan:\n{investment_plan}\n\n"
                     "Make an informed, strategic trading decision.\n\n"
                     "## Output\n\n"

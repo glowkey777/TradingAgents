@@ -26,6 +26,9 @@ from tradingagents.dataflows.vendors.sec_edgar import (
     get_cashflow as get_sec_edgar_cashflow,
     get_income_statement as get_sec_edgar_income_statement,
 )
+from tradingagents.dataflows.vendors.sec_form4 import (
+    get_insider_transactions as get_sec_form4_insider_transactions,
+)
 from tradingagents.dataflows.vendors.yahoo.fundamentals import (
     get_balance_sheet as get_yfinance_balance_sheet,
     get_cashflow as get_yfinance_cashflow,
@@ -89,6 +92,7 @@ TOOLS_CATEGORIES = {
 VENDOR_LIST = [
     "yfinance",
     "sec_edgar",
+    "sec_form4",
     "fred",
     "polymarket",
     "alpha_vantage",
@@ -145,6 +149,7 @@ VENDOR_METHODS = {
     "get_insider_transactions": {
         "alpha_vantage": get_alpha_vantage_insider_transactions,
         "yfinance": get_yfinance_insider_transactions,
+        "sec_form4": get_sec_form4_insider_transactions,
     },
     # macro_data
     "get_macro_indicators": {

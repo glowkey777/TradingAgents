@@ -2,7 +2,11 @@
 
 from __future__ import annotations
 
-from tradingagents.agents.context import get_instrument_context_from_state, get_language_instruction
+from tradingagents.agents.context import (
+    get_instrument_context_from_state,
+    get_language_instruction,
+    render_quant_context_section,
+)
 from tradingagents.agents.schemas import ResearchPlan, render_research_plan
 from tradingagents.agents.structured import (
     NO_EXTERNAL_TOOLS,
@@ -16,6 +20,7 @@ def create_research_manager(llm):
 
     def research_manager_node(state) -> dict:
         instrument_context = get_instrument_context_from_state(state)
+        quant_context_section = render_quant_context_section(state)
         history = state["investment_debate_state"].get("history", "")
 
         investment_debate_state = state["investment_debate_state"]
@@ -23,6 +28,10 @@ def create_research_manager(llm):
         prompt = f"""As the Research Manager and debate facilitator, your role is to critically evaluate this round of debate and deliver a clear, actionable investment plan for the trader.
 
 {instrument_context}
+
+{quant_context_section}
+
+When weighing the debate, clearly distinguish Quant Engine evidence (from the frozen Quant Engine context) from agent-generated research evidence. Do not present an agent's speculation as Quant Engine data.
 
 ---
 

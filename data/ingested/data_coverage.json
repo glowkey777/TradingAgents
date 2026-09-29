@@ -1,0 +1,46 @@
+{
+  "daily": {
+    "frequency": "daily",
+    "available_from": "2013-01-02",
+    "available_to": "2026-09-25",
+    "trading_days": 3454,
+    "expected_bars": 3454,
+    "actual_bars": 3454,
+    "missing_bars": 0,
+    "status": "COMPLETE"
+  },
+  "intraday_15m": {
+    "frequency": "15m",
+    "available_from": "2018-09-21",
+    "available_to": "2026-09-25",
+    "trading_days": 2013,
+    "expected_bars": 52132,
+    "actual_bars": 52132,
+    "missing_bars": 0,
+    "full_sessions_26bar": 1995,
+    "half_day_sessions_14bar": 17,
+    "boundary_first_day_24bar": 1,
+    "half_day_dates": [
+      "2018-09-21",
+      "2018-11-23",
+      "2018-12-24",
+      "2019-07-03",
+      "2019-11-29",
+      "2019-12-24",
+      "2020-11-27",
+      "2020-12-24",
+      "2021-11-26",
+      "2022-11-25",
+      "2023-07-03",
+      "2023-11-24",
+      "2024-07-03",
+      "2024-11-29",
+      "2024-12-24",
+      "2025-07-03",
+      "2025-11-28",
+      "2025-12-24"
+    ],
+    "boundary_note": "2018-09-20 及以前 15m = SOURCE_UNAVAILABLE（OpenD 无历史日内数据，非损坏）",
+    "status": "COMPLETE"
+  }
+}

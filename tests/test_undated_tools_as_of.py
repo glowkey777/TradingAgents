@@ -219,9 +219,10 @@ def test_every_vendor_unavailable_says_so_rather_than_crashing(monkeypatch):
     from tradingagents.dataflows.errors import VendorRateLimitError
 
     def _down(*a, **k):
-        raise VendorRateLimitError("Yahoo Finance is unreachable")
+        raise VendorRateLimitError("SEC EDGAR is unreachable")
 
-    monkeypatch.setitem(router.VENDOR_METHODS["get_balance_sheet"], "yfinance", _down)
+    # get_balance_sheet 现在配置走 sec_edgar（6.5E tool_vendors 覆盖）
+    monkeypatch.setitem(router.VENDOR_METHODS["get_balance_sheet"], "sec_edgar", _down)
 
     out = router.route_to_vendor("get_balance_sheet", "AAPL", "annual", "2026-09-01")
 

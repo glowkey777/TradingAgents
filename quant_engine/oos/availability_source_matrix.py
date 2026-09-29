@@ -1,0 +1,167 @@
+# -*- coding: utf-8 -*-
+"""Source Capability Matrix（P7 STEP 6.5B 第 1 步）。
+
+记录每个 vendor×tool 的 historical availability capability。只陈述证据，不猜测。
+status 只能是 PIT_SAFE / UNVERIFIABLE / UNSAFE / NOT_SUPPORTED。
+"""
+from __future__ import annotations
+
+from .availability_models import SourceCapability, SourceStatus
+
+
+def build_source_matrix() -> list[SourceCapability]:
+    return [
+        # ── fundamentals statements（3 tool × 3 vendor）──
+        SourceCapability(
+            source="Yahoo Finance", vendor="yfinance", tool="get_balance_sheet",
+            dataset="balance_sheet / quarterly_balance_sheet",
+            period_field="fiscal period end (column)", publication_field=None,
+            filing_field=None, availability_field=None, revision_field=None,
+            historical_support=False,
+            pit_guarantee="无：只按 period_end 切，无 filing date（_PERIOD_END_VINTAGE）",
+            coverage="US + 全球", limitations="period_end <= T ≠ available_at <= T",
+            status=SourceStatus.UNVERIFIABLE,
+        ),
+        SourceCapability(
+            source="Yahoo Finance", vendor="yfinance", tool="get_cashflow",
+            dataset="cashflow / quarterly_cashflow",
+            period_field="fiscal period end (column)", publication_field=None,
+            filing_field=None, availability_field=None, revision_field=None,
+            historical_support=False,
+            pit_guarantee="无：只按 period_end 切，无 filing date",
+            coverage="US + 全球", limitations="period_end <= T ≠ available_at <= T",
+            status=SourceStatus.UNVERIFIABLE,
+        ),
+        SourceCapability(
+            source="Yahoo Finance", vendor="yfinance", tool="get_income_statement",
+            dataset="income_stmt / quarterly_income_stmt",
+            period_field="fiscal period end (column)", publication_field=None,
+            filing_field=None, availability_field=None, revision_field=None,
+            historical_support=False,
+            pit_guarantee="无：只按 period_end 切，无 filing date",
+            coverage="US + 全球", limitations="period_end <= T ≠ available_at <= T",
+            status=SourceStatus.UNVERIFIABLE,
+        ),
+        SourceCapability(
+            source="Alpha Vantage", vendor="alpha_vantage", tool="get_balance_sheet",
+            dataset="BALANCE_SHEET",
+            period_field="fiscalDateEnding", publication_field=None,
+            filing_field=None, availability_field=None, revision_field=None,
+            historical_support=False,
+            pit_guarantee="无：_filter_reports_by_date 只按 fiscalDateEnding 切，无 filing date",
+            coverage="US + 全球", limitations="fiscalDateEnding <= T ≠ available_at <= T",
+            status=SourceStatus.UNVERIFIABLE,
+        ),
+        SourceCapability(
+            source="Alpha Vantage", vendor="alpha_vantage", tool="get_cashflow",
+            dataset="CASH_FLOW",
+            period_field="fiscalDateEnding", publication_field=None,
+            filing_field=None, availability_field=None, revision_field=None,
+            historical_support=False,
+            pit_guarantee="无：只按 fiscalDateEnding 切，无 filing date",
+            coverage="US + 全球", limitations="fiscalDateEnding <= T ≠ available_at <= T",
+            status=SourceStatus.UNVERIFIABLE,
+        ),
+        SourceCapability(
+            source="Alpha Vantage", vendor="alpha_vantage", tool="get_income_statement",
+            dataset="INCOME_STATEMENT",
+            period_field="fiscalDateEnding", publication_field=None,
+            filing_field=None, availability_field=None, revision_field=None,
+            historical_support=False,
+            pit_guarantee="无：只按 fiscalDateEnding 切，无 filing date",
+            coverage="US + 全球", limitations="fiscalDateEnding <= T ≠ available_at <= T",
+            status=SourceStatus.UNVERIFIABLE,
+        ),
+        SourceCapability(
+            source="SEC EDGAR companyfacts", vendor="sec_edgar", tool="get_balance_sheet",
+            dataset="companyfacts us-gaap (Assets 等 instant facts)",
+            period_field="end / start", publication_field=None,
+            filing_field="filed", availability_field="filed", revision_field=None,
+            historical_support=True,
+            pit_guarantee="fact['filed'] 是 filing date（XBRL 提交日期）；_as_of 用 fact['filed'] > curr_date 过滤，restatement 按 amendment filing 计",
+            coverage="仅 US SEC filers（非 US filer 回落）", limitations="仅覆盖 US filers；非 US filer 回落到 yfinance",
+            status=SourceStatus.PIT_SAFE,
+        ),
+        SourceCapability(
+            source="SEC EDGAR companyfacts", vendor="sec_edgar", tool="get_cashflow",
+            dataset="companyfacts us-gaap (cash flow duration facts)",
+            period_field="end / start", publication_field=None,
+            filing_field="filed", availability_field="filed", revision_field=None,
+            historical_support=True,
+            pit_guarantee="fact['filed'] 是 filing date；duration fact 用 span 过滤 + filed 过滤",
+            coverage="仅 US SEC filers", limitations="仅覆盖 US filers",
+            status=SourceStatus.PIT_SAFE,
+        ),
+        SourceCapability(
+            source="SEC EDGAR companyfacts", vendor="sec_edgar", tool="get_income_statement",
+            dataset="companyfacts us-gaap (Revenue/NetIncome duration facts)",
+            period_field="end / start", publication_field=None,
+            filing_field="filed", availability_field="filed", revision_field=None,
+            historical_support=True,
+            pit_guarantee="fact['filed'] 是 filing date；Q4 不 derived（无 filing date 不造数）",
+            coverage="仅 US SEC filers", limitations="仅覆盖 US filers",
+            status=SourceStatus.PIT_SAFE,
+        ),
+        # ── insider transactions（2 vendor）──
+        SourceCapability(
+            source="Yahoo Finance", vendor="yfinance", tool="get_insider_transactions",
+            dataset="Ticker.insider_transactions",
+            period_field=None, publication_field=None,
+            filing_field=None, availability_field=None, revision_field=None,
+            historical_support=False,
+            pit_guarantee="无：只按 Start Date（transaction date）切，无 Form 4 filing date（_TRANSACTION_DATE_VINTAGE）",
+            coverage="US", limitations="transaction_date <= T ≠ filing_date <= T",
+            status=SourceStatus.UNVERIFIABLE,
+        ),
+        SourceCapability(
+            source="Alpha Vantage", vendor="alpha_vantage", tool="get_insider_transactions",
+            dataset="INSIDER_TRANSACTIONS",
+            period_field=None, publication_field=None,
+            filing_field=None, availability_field=None, revision_field=None,
+            historical_support=False,
+            pit_guarantee="无：只按 transaction_date 切，无 Form 4 filing date",
+            coverage="US", limitations="transaction_date <= T ≠ filing_date <= T",
+            status=SourceStatus.UNVERIFIABLE,
+        ),
+        # ── 已 PASS 的 tool（不扩大范围，仅记录，不改状态）──
+        SourceCapability(
+            source="FRED", vendor="fred", tool="get_macro_indicators",
+            dataset="FRED series",
+            period_field="observation date", publication_field=None,
+            filing_field=None, availability_field="realtime vintage", revision_field="revision",
+            historical_support=True,
+            pit_guarantee="realtime_start/end = min(curr_date, fred_today) 真实 vintage pin，防 revision leakage",
+            coverage="US macro", limitations="需要 FRED_API_KEY",
+            status=SourceStatus.PIT_SAFE,
+        ),
+        SourceCapability(
+            source="Yahoo Finance news", vendor="yfinance", tool="get_news",
+            dataset="News API",
+            period_field=None, publication_field="providerPublishTime", filing_field=None,
+            availability_field="pub_date", revision_field=None,
+            historical_support=True,
+            pit_guarantee="in_window(pub_date) half-open window 过滤",
+            coverage="US + 全球", limitations="无",
+            status=SourceStatus.PIT_SAFE,
+        ),
+        SourceCapability(
+            source="StockTwits", vendor="stocktwits", tool="get_news (social)",
+            dataset="symbol social feed",
+            period_field=None, publication_field="created_at", filing_field=None,
+            availability_field="created_at", revision_field=None,
+            historical_support=True,
+            pit_guarantee="created_at 过滤；无 timestamp 的历史消息 drop",
+            coverage="US social", limitations="历史覆盖有限",
+            status=SourceStatus.PIT_SAFE,
+        ),
+        SourceCapability(
+            source="Polymarket", vendor="polymarket", tool="get_prediction_markets",
+            dataset="prediction markets",
+            period_field=None, publication_field=None, filing_field=None,
+            availability_field="(withhold)", revision_field=None,
+            historical_support=False,
+            pit_guarantee="无历史 vintage：curr_date < today 时 withhold，不返回 live odds",
+            coverage="live only", limitations="历史日期 withhold",
+            status=SourceStatus.PIT_SAFE,
+        ),
+    ]

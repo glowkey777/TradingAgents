@@ -1,0 +1,27 @@
+[
+  {
+    "sample_id": "sample_form4_001",
+    "evidence_type": "REAL_SOURCE",
+    "synthetic": false,
+    "source": "SEC_EDGAR",
+    "source_url": "https://www.sec.gov/Archives/edgar/data/1341439/000112760224019342/0001127602-24-019342.txt",
+    "retrieved_at": "2026-09-28",
+    "accession_number": "0001127602-24-019342",
+    "form": "4",
+    "issuer": "ORACLE CORP",
+    "issuer_cik": "0001341439",
+    "reporting_owner": "Screven Edward",
+    "reporting_owner_cik": "0001723056",
+    "period_of_report": "2024-06-26",
+    "filed_as_of_date": "2024-06-27",
+    "acceptance_datetime": "2024-06-27 19:20:57",
+    "xml_file": "SEC_Form4_0001127602-24-019342_form4.xml",
+    "xml_sha256": "6ce3233a9ef9c3be93af03b96c4b51557779e006b9105a4e46e2a2fd65ba4d28",
+    "header_file": "SEC_Form4_0001127602-24-019342_submission_header.txt",
+    "header_sha256": "6bb0c2b8ede7f803699859a745d09d41fcef1745b70cf4bda6934ae7e7f4c300",
+    "transaction_date": "2024-06-26",
+    "filing_date": "2024-06-27",
+    "filing_date_source_field": "FILED AS OF DATE",
+    "note": "submission.txt 完整 raw 在 Base64 传输中 deflate 损坏（ZIP hash 2f40b4…≠期望 6b7977…）；header 从损坏文件前 512 字节真实解压获得，含完整 FILED AS OF DATE。form4.xml + metadata.json 完整且 hash 匹配。"
+  }
+]

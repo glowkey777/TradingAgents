@@ -14,6 +14,7 @@ from tradingagents.agents.context import (
     get_instrument_context_from_state,
     get_language_instruction,
     get_portfolio_context_from_state,
+    render_quant_context_section,
 )
 from tradingagents.agents.schemas import PortfolioDecision, render_pm_decision
 from tradingagents.agents.structured import (
@@ -29,6 +30,7 @@ def create_portfolio_manager(llm):
     def portfolio_manager_node(state) -> dict:
         instrument_context = get_instrument_context_from_state(state)
         portfolio_context = get_portfolio_context_from_state(state)
+        quant_context_section = render_quant_context_section(state)
 
         history = state["risk_debate_state"]["history"]
         risk_debate_state = state["risk_debate_state"]
@@ -47,6 +49,10 @@ def create_portfolio_manager(llm):
 {instrument_context}
 
 {portfolio_context}
+
+{quant_context_section}
+
+Use the Quant Engine context as final decision background. It is evidence, not an automatic trading instruction; the decision remains a judgment over the full research chain.
 
 ---
 

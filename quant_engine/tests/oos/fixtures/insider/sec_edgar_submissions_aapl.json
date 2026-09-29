@@ -1,0 +1,45 @@
+{
+  "cik": "0000320193",
+  "name": "APPLE INC",
+  "_retrieval_metadata": {
+    "source": "SEC EDGAR submissions API",
+    "endpoint": "https://data.sec.gov/submissions/CIK0000320193.json",
+    "retrieved_note": "fixture 基于 sec-edgar-api.readthedocs.io + SEC 官方文档的 filings.recent columnar 结构构造；真实 API replay 需网络环境（本环境 sec.gov TLS 阻断，见报告）",
+    "user_agent_required": true,
+    "no_api_key": true
+  },
+  "filings": {
+    "recent": {
+      "accessionNumber": [
+        "0000320193-24-000050",
+        "0000320193-24-000049",
+        "0000320193-24-000048",
+        "0000320193-24-000047"
+      ],
+      "filingDate": [
+        "2024-06-10",
+        "2024-06-02",
+        "2024-06-05",
+        "2024-05-15"
+      ],
+      "reportDate": [
+        "2024-06-07",
+        "2024-05-31",
+        "2024-05-31",
+        "2024-03-31"
+      ],
+      "form": [
+        "4",
+        "4",
+        "4/A",
+        "10-K"
+      ],
+      "acceptanceDateTime": [
+        "2024-06-10T16:30:00.000Z",
+        "2024-06-02T14:15:00.000Z",
+        "2024-06-05T09:45:00.000Z",
+        "2024-05-15T20:00:00.000Z"
+      ]
+    }
+  }
+}

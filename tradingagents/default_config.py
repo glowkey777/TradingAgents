@@ -138,7 +138,7 @@ DEFAULT_CONFIG = _apply_env_overrides({
     "data_vendors": {
         "core_stock_apis": "yfinance",       # Options: alpha_vantage, yfinance
         "technical_indicators": "yfinance",  # Options: alpha_vantage, yfinance
-        "fundamental_data": "yfinance",      # Options: alpha_vantage, yfinance
+        "fundamental_data": "yfinance",      # get_fundamentals(profile) 走 yfinance（无 sec_edgar profile 实现）
         "news_data": "yfinance",             # Options: alpha_vantage, yfinance
         "macro_data": "fred",                # Options: fred (needs FRED_API_KEY)
         "prediction_markets": "polymarket",  # Options: polymarket (keyless)
@@ -146,6 +146,23 @@ DEFAULT_CONFIG = _apply_env_overrides({
     # Tool-level configuration (takes precedence over category-level)
     "tool_vendors": {
         # Example: "get_stock_data": "alpha_vantage",  # Override category default
+        # P7 STEP 6.5E: 3 个 statement + insider 绑定到 PIT-safe SEC provider。
+        "get_balance_sheet": "sec_edgar",
+        "get_cashflow": "sec_edgar",
+        "get_income_statement": "sec_edgar",
+        "get_insider_transactions": "sec_form4",
+    },
+    # Vendor configuration version (P7 STEP 6.5E 第 8 节).
+    # Records the old→new binding; does NOT rewrite HISTORICAL_PREDICTION_PROVENANCE.
+    "vendor_config_version": {
+        "version": "6.5E-v1",
+        "effective_time": "2026-09-28",
+        "statement_vendors": {"old": "yfinance", "new": "sec_edgar"},
+        "insider_transactions": {"old": "yfinance/alpha_vantage", "new": "sec_form4"},
+        "coverage": "US SEC filers only",
+        "unsupported_symbols": "non-US filer -> NoMarketDataError (no fallback)",
+        "failure_behavior": "typed VendorRateLimitError -> DATA_UNAVAILABLE (no silent fallback)",
+        "fallback_behavior": "no silent fallback; PIT safety > data completeness",
     },
     # Benchmark for alpha calculation in the reflection layer.
     # ``benchmark_ticker`` (when set) overrides the suffix map for all

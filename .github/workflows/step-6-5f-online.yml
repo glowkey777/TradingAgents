@@ -1,0 +1,57 @@
+name: STEP 6.5F Online Production Runtime
+
+# 在可访问 SEC 的 CI runner 上，用与 Hermes 完全相同的 commit 跑真实在线验证。
+# 手动触发（workflow_dispatch），因为这是一次性的 runtime evidence，不是持续集成。
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  online-runtime:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout exact commit
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ github.sha }}
+          fetch-depth: 1
+
+      - name: Print commit identity (must match Hermes local HEAD)
+        run: |
+          echo "commit_sha=$(git rev-parse HEAD)"
+          echo "branch=$(git branch --show-current)"
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+
+      - name: SEC reachability probe
+        env:
+          SEC_EDGAR_USER_AGENT: ${{ secrets.SEC_EDGAR_USER_AGENT }}
+        run: |
+          python scripts/step_6_5f_online.py probe
+        # 失败（exit 2）→ job 失败 → 后续 verify 不执行（fail-closed，第 6 节）。
+
+      - name: Online production verification (real SEC request via production router)
+        env:
+          SEC_EDGAR_USER_AGENT: ${{ secrets.SEC_EDGAR_USER_AGENT }}
+        run: |
+          python scripts/step_6_5f_online.py verify
+
+      - name: Upload evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: step-6-5f-online-evidence
+          path: artifacts/step_6_5f/**
+          if-no-files-found: warn

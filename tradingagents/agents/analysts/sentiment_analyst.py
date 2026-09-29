@@ -22,7 +22,11 @@ from datetime import datetime, timedelta
 from langchain_core.messages import AIMessage
 from langchain_core.prompts import ChatPromptTemplate, MessagesPlaceholder
 
-from tradingagents.agents.context import get_instrument_context_from_state, get_language_instruction
+from tradingagents.agents.context import (
+    get_instrument_context_from_state,
+    get_language_instruction,
+    render_quant_context_section,
+)
 from tradingagents.agents.post_screen import jev_screen
 from tradingagents.agents.schemas import SentimentReport, render_sentiment_report
 from tradingagents.agents.structured import (
@@ -54,6 +58,7 @@ def create_sentiment_analyst(llm):
         end_date = state["trade_date"]
         start_date = _seven_days_back(end_date)
         instrument_context = get_instrument_context_from_state(state)
+        quant_context_section = render_quant_context_section(state)
 
         # Pre-fetch all three sources. Each fetcher degrades gracefully and
         # returns a string (no exceptions surface from here), so the LLM
@@ -74,6 +79,7 @@ def create_sentiment_analyst(llm):
             news_block=news_block,
             stocktwits_block=stocktwits_block,
             reddit_block=reddit_block,
+            quant_context_section=quant_context_section,
         )
 
         prompt = ChatPromptTemplate.from_messages(
@@ -126,6 +132,7 @@ def _build_system_message(
     news_block: str,
     stocktwits_block: str,
     reddit_block: str,
+    quant_context_section: str = "",
 ) -> str:
     """Assemble the sentiment-analyst system message with structured data blocks."""
     return f"""You are a financial market sentiment analyst. Your task is to produce a comprehensive sentiment report for {ticker} covering the period from {start_date} to {end_date}, drawing on three complementary data sources that have already been collected for you.
@@ -180,4 +187,4 @@ Fill the following fields:
 - **confidence**: low / medium / high, based on data quality and sample size.
 - **narrative**: Full source-by-source breakdown, divergences, dominant narrative themes, catalysts and risks, and a markdown summary table of key sentiment signals (direction, source, supporting evidence).
 
-{get_language_instruction()}"""
+{get_language_instruction()}""" + "\n\nTreat the Quant Engine context below as your quantitative baseline (regime + probability are prior evidence); do not let it replace your own social-media/sentiment research.\n\n" + quant_context_section

@@ -1,0 +1,16 @@
+{
+  "source": "SEC EDGAR",
+  "source_url": "https://www.sec.gov/Archives/edgar/data/1341439/000112760224019342/0001127602-24-019342.txt",
+  "index_url": "https://www.sec.gov/Archives/edgar/data/1341439/000112760224019342/0001127602-24-019342-index.htm",
+  "accession_number": "0001127602-24-019342",
+  "form": "4",
+  "issuer": "ORACLE CORP",
+  "issuer_cik": "0001341439",
+  "reporting_owner": "Screven Edward",
+  "reporting_owner_cik": "0001723056",
+  "period_of_report": "2024-06-26",
+  "filed_as_of_date": "2024-06-27",
+  "acceptance_datetime": "2024-06-27 19:20:57",
+  "artifact_sha256": "e5798ad4de0744c3881cf1334399add913782deca1749477de7f2f3f9bbedb42",
+  "note": "Content captured from the SEC public complete-submission text endpoint via web retrieval. Artifact hash is for this local file; it is not asserted to be a byte-for-byte HTTP transfer hash from sec.gov."
+}
